@@ -1,0 +1,102 @@
+package com.qa.user_app.data.entity;
+
+import java.util.Objects;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "user")
+public class User {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//Primary key field, want our IDs generated for us
+	private Integer id;
+	
+	@NotNull
+	private String forename;
+	
+	@NotNull
+	private String surname;
+	
+	// validation constraints
+	@Max(130)
+	@Min(18)
+	private Integer age;
+	
+	public User() {
+		super();
+	}
+	
+	public User(@NotNull String forename, @NotNull String surname, @Max(130) @Min(18) Integer age) {
+		super();
+		this.forename = forename;
+		this.surname = surname;
+		this.age = age;
+	}
+	
+	
+	public User(Integer id, String forename, String surname, Integer age) {
+		super();
+		this.id = id;
+		this.forename = forename;
+		this.surname = surname;
+		this.age = age;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getForename() {
+		return forename;
+	}
+	public void setForename(String forename) {
+		this.forename = forename;
+	}
+	public String getSurname() {
+		return surname;
+	}
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	public Integer getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", forename=" + forename + ", surname=" + surname + ", age=" + age + "]";
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(age, forename, id, surname);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(age, other.age) && Objects.equals(forename, other.forename)
+				&& Objects.equals(id, other.id) && Objects.equals(surname, other.surname);
+	}
+	
+	
+
+}

@@ -11,19 +11,25 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
 @Entity
 @Table(name = "user")
 public class User {
 	
-	@Id
+	@Id // any class marked with @Entity must have @Id to signify
+			// the primary key field
+	// this tells hibernate to auto-increment IDs
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//Primary key field, want our IDs generated for us
 	private Integer id;
 	
 	@NotNull
+	@Length(min = 1, message = "Names cannot be empty")
 	private String forename;
 	
 	@NotNull
+	@Length(min = 1)
 	private String surname;
 	
 	// validation constraints
@@ -35,7 +41,7 @@ public class User {
 		super();
 	}
 	
-	public User(@NotNull String forename, @NotNull String surname, @Max(130) @Min(18) Integer age) {
+	public User(String forename, String surname, Integer age) {
 		super();
 		this.forename = forename;
 		this.surname = surname;
@@ -43,13 +49,15 @@ public class User {
 	}
 	
 	
-	public User(Integer id, String forename, String surname, Integer age) {
+	
+	public User(Integer id,  String forename,  String surname, Integer age) {
 		super();
 		this.id = id;
 		this.forename = forename;
 		this.surname = surname;
 		this.age = age;
 	}
+
 	public Integer getId() {
 		return id;
 	}
